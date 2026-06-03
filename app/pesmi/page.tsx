@@ -68,7 +68,7 @@ async function getSongs({
   // params.set("categories", "3,31,32,33,34,35,36,37,38,39,40,41,42,43,44,60"); 
   params.set("page", String(page));
   params.set("per_page", String(perPage));
-  params.set("_fields", "id,slug,title,content");
+  params.set("_fields", "id,slug,title");
 
   if (q.trim()) {
     params.set("search", q.trim());
