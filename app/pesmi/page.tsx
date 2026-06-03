@@ -7,6 +7,7 @@ import Link from "next/link";
 import SearchInput from "./SearchInput";
 import ScrollRestore from "./ScrollRestore";
 import SongLink from "./SongLink";
+import PaginationLink from "./PaginationLink";
 type WpPost = {
   id: number;
   slug: string;
@@ -84,6 +85,7 @@ async function getSongs({
 
   const url = `https://narodne-pesmi.si/wp-json/wp/v2/posts?${params.toString()}`
 
+  await new Promise((r) => setTimeout(r, 300)); 
   const res = await fetch(url, {
     next: { revalidate: 3600 },
   });
@@ -246,61 +248,63 @@ export default async function PesmiPage({
 
           {/* PAGINATION */}
           <div className="mt-10 flex flex-wrap items-center justify-center gap-2">
-            <Link
-              href={buildPesmiUrl({
-                q,
-                sort,
-                page: Math.max(safePage - 1, 1),
-              })}
-              aria-disabled={safePage === 1}
-              className={`rounded-lg px-4 py-2 text-sm font-medium transition ${
-                safePage === 1
-                  ? "cursor-not-allowed bg-zinc-100 text-zinc-400 dark:bg-zinc-900 dark:text-zinc-600"
-                  : "bg-zinc-200 text-zinc-900 hover:bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700"
-              }`}
-            >
-              ← Prejšnja
-            </Link>
+  <PaginationLink
+    href={buildPesmiUrl({
+      q,
+      sort,
+      page: Math.max(safePage - 1, 1),
+    })}
+    disabled={safePage === 1}
+    className={`rounded-lg px-4 py-2 text-sm font-medium transition ${
+      safePage === 1
+        ? "cursor-not-allowed bg-zinc-100 text-zinc-400 dark:bg-zinc-900 dark:text-zinc-600"
+        : "bg-zinc-200 text-zinc-900 hover:bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700"
+    }`}
+  >
+    ← Prejšnja
+  </PaginationLink>
 
-            {visiblePages.map((p, i) =>
-              p === "..." ? (
-                <span
-                  key={`ellipsis-${i}`}
-                  className="px-2 text-sm text-zinc-500 dark:text-zinc-400"
-                >
-                  …
-                </span>
-              ) : (
-                <Link
-                  key={p}
-                  href={buildPesmiUrl({ q, sort, page: p })}
-                  className={`rounded-lg px-3 py-2 text-sm font-medium transition ${
-                    p === safePage
-                      ? "bg-blue-600 text-white"
-                      : "bg-zinc-200 text-zinc-900 hover:bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700"
-                  }`}
-                >
-                  {p}
-                </Link>
-              )
-            )}
+  {visiblePages.map((p, i) =>
+    p === "..." ? (
+      <span
+        key={`ellipsis-${i}`}
+        className="px-2 text-sm text-zinc-500 dark:text-zinc-400"
+      >
+        …
+      </span>
+    ) : (
+      <PaginationLink
+        key={p}
+        href={buildPesmiUrl({ q, sort, page: p })}
+        disabled={p === safePage}
+        className={`rounded-lg px-3 py-2 text-sm font-medium transition ${
+          p === safePage
+            ? "bg-blue-600 text-white cursor-default"
+            : "bg-zinc-200 text-zinc-900 hover:bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700"
+        }`}
+      >
+        {p}
+      </PaginationLink>
+    )
+  )}
 
-            <Link
-              href={buildPesmiUrl({
-                q,
-                sort,
-                page: Math.min(safePage + 1, totalPages),
-              })}
-              aria-disabled={safePage === totalPages}
-              className={`rounded-lg px-4 py-2 text-sm font-medium transition ${
-                safePage === totalPages
-                  ? "cursor-not-allowed bg-zinc-100 text-zinc-400 dark:bg-zinc-900 dark:text-zinc-600"
-                  : "bg-zinc-200 text-zinc-900 hover:bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700"
-              }`}
-            >
-              Naslednja →
-            </Link>
-          </div>
+  <PaginationLink
+    href={buildPesmiUrl({
+      q,
+      sort,
+      page: Math.min(safePage + 1, totalPages),
+    })}
+    disabled={safePage === totalPages}
+    className={`rounded-lg px-4 py-2 text-sm font-medium transition ${
+      safePage === totalPages
+        ? "cursor-not-allowed bg-zinc-100 text-zinc-400 dark:bg-zinc-900 dark:text-zinc-600"
+        : "bg-zinc-200 text-zinc-900 hover:bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700"
+    }`}
+  >
+    Naslednja →
+  </PaginationLink>
+</div>
+
 
           <p className="mt-4 text-center text-sm text-zinc-600 dark:text-zinc-400">
             Stran {safePage} od {totalPages}

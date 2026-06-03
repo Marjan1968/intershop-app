@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
+import ProgressBar from "./components/ProgressBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,6 +27,7 @@ export default function RootLayout({
   return (
     <html lang="sl">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+         <ProgressBar />
         <Header />
         <main className="mx-auto w-full max-w-[1600px] px-4 py-6 sm:px-6">
           {children}
