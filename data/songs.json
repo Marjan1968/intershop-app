@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "marko-skace",
+    "title": "Marko skače",
+    "desc": "Tradicionalna slovenska pesem",
+    "text": "Marko skače po zelenoj trati..."
+  },
+  {
+    "slug": "v-dolini-tihi",
+    "title": "V dolini tihi",
+    "desc": "Slovenija",
+    "text": "V dolini tihi je vasica mala..."
+  },
+  {
+    "slug": "adijo-pa-zdrava-ostani",
+    "title": "Adijo, pa zdrava ostani",
+    "desc": "Slovenija",
+    "text": "Adijo, pa zdrava ostani..."
+  },
+  {
+    "slug": "tam-kjer-murke-cveto",
+    "title": "Tam kjer murke cveto",
+    "desc": "Ljudska pesem",
+    "text": "Tam kjer murke cveto..."
+  }
+]
