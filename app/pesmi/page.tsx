@@ -65,7 +65,7 @@ async function getSongs({
   perPage: number;
 }) {
   const params = new URLSearchParams();
-  params.set("categories", "3,31,32,33,34,35,36,37,38,39,40,41,42,43,44,60"); 
+  // params.set("categories", "3,31,32,33,34,35,36,37,38,39,40,41,42,43,44,60"); 
   params.set("page", String(page));
   params.set("per_page", String(perPage));
   params.set("_fields", "id,slug,title,content");
@@ -83,7 +83,7 @@ async function getSongs({
     params.set("order", "desc");
   }
 
-  const url = `https://narodne-pesmi.si/wp-json/wp/v2/posts?${params.toString()}`
+  const url = `https://besedilo.si/wp-json/wp/v2/posts?${params.toString()}`
 
   await new Promise((r) => setTimeout(r, 300)); 
   const res = await fetch(url, {
