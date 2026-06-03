@@ -64,6 +64,7 @@ async function getSongs({
   perPage: number;
 }) {
   const params = new URLSearchParams();
+  params.set("categories", "3"); 
   params.set("page", String(page));
   params.set("per_page", String(perPage));
   params.set("_fields", "id,slug,title,content");
